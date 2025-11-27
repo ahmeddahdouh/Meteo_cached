@@ -1,0 +1,32 @@
+# Gradle files
+.gradle
+build/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Log files
+*.log
+
+# Android Studio IDE files
+.idea/
+*.iml
+.DS_Store
+captures/
+.externalNativeBuild/
+
+# Keystore files
+*.jks
+*.keystore
+
+# Google services file
+**/google-services.json
+
+# Crashlytics files
+**/crashlytics.properties
+**/crashlytics-build.properties
+
+# Proguard files
+**/proguard/mapping.txt
+**/proguard/seeds.txt
+**/proguard/usage.txt

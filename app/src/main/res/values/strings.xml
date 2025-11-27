@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Meteo Cached</string>
+    <string name="home_title">Bonjour 👋</string>
+    <string name="home_search_placeholder">Chercher une ville (min. 2 lettres)</string>
+    <string name="home_use_location">Utiliser ma position</string>
+    <string name="home_nearby_weather">Autour de vous</string>
+    <string name="home_offline_title">Mode hors ligne</string>
+    <string name="home_offline_message">Pas de connexion. Les dernières données en cache sont affichées.</string>
+    <string name="home_retry">Réessayer</string>
+    <string name="home_error_title">Une erreur est survenue</string>
+    <string name="home_empty_title">Aucun favori</string>
+    <string name="home_empty_message">Ajoutez vos villes préférées pour les retrouver rapidement.</string>
+    <string name="home_favorites_title">Vos favoris</string>
+    <string name="home_temp_range">%1$d° / %2$d°</string>
+    <string name="home_wind">%1$d km/h</string>
+    <string name="search_title">Recherche</string>
+    <string name="search_placeholder">Ex: Paris, Marseille, Oran…</string>
+    <string name="search_coordinates">Lat: %1$.2f • Lon: %2$.2f</string>
+    <string name="search_view_details">Voir la météo</string>
+    <string name="details_min_temp">Température minimale</string>
+    <string name="details_max_temp">Température maximale</string>
+    <string name="details_wind_speed">Vitesse du vent</string>
+    <string name="details_error_title">Impossible de mettre à jour</string>
+    <string name="details_refresh">Mettre à jour</string>
+    <string name="details_remove_favorite">Retirer des favoris</string>
+    <string name="details_add_favorite">Ajouter aux favoris</string>
+</resources>
