@@ -12,8 +12,12 @@
 - **Interface moderne** : Entièreirement construite avec Jetpack Compose pour une interface utilisateur déclarative et réactive.
 
 ## 📸 Aperçu
+- **Jour**
 
-![Aperçu de l'application](img.png)
+![Aperçu de l'application](ScreenShots/day.png)
+
+- **Nuit**
+![img_1.png](ScreenShots/night.png)
 
 ## 🏛️ Architecture
 
