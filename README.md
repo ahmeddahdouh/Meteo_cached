@@ -9,7 +9,11 @@
 - **Gestion des favoris** : Ajoutez vos villes préférées à une liste pour un accès rapide et facile.
 - **Géolocalisation** : Affichez la météo pour votre position actuelle.
 - **Thème dynamique** : L'interface s'adapte automatiquement entre le jour et la nuit, avec des palettes de couleurs et des animations fluides.
-- **Interface moderne** : Entièrement construite avec Jetpack Compose pour une interface utilisateur déclarative et réactive.
+- **Interface moderne** : Entièreirement construite avec Jetpack Compose pour une interface utilisateur déclarative et réactive.
+
+## 📸 Aperçu
+
+![Aperçu de l'application](img.png)
 
 ## 🏛️ Architecture
 
