@@ -1,54 +1,60 @@
-## Meteo Cached
+# Météo Cahed 🌦️
 
-Application météo Jetpack Compose suivant l’architecture MVVM + UDF imposée dans le TP. L’app s’appuie sur l’API Open-Meteo (modèle `meteofrance_seamless`), gère la recherche de villes, les favoris persistés (Room + DataStore), la géolocalisation et le mode hors-ligne.
+**Météo Cahed** est une application météo pour Android, développée en utilisant les dernières technologies recommandées par Google. Elle permet aux utilisateurs de rechercher la météo pour n'importe quelle ville, de gérer une liste de favoris et d'obtenir les conditions météo pour leur position actuelle.
 
-### Architecture
+## ✨ Fonctionnalités
 
-- **UI layer (`ui/`)** : écrans Compose (Home, Search, Details), composants réutilisables, navigation Compose. Les `Route` collectent l’état des ViewModels via `collectAsStateWithLifecycle()`. Les états sont immuables (`data class`) et appliquent l’UDF (intent → ViewModel → StateFlow → UI).
-- **Domain layer (`domain/usecases`)** : use cases ciblés (`SearchCityUseCase`, `GetWeatherForecastUseCase`, `GetFavoriteCitiesUseCase`, `AddToFavoritesUseCase`, `RemoveFromFavoritesUseCase`) injectés dans les ViewModels via `AppViewModelProvider`.
-- **Data layer (`data/`)** :
-  - `remote/WeatherApiService` (Retrofit + Kotlinx Serialization) pour la géolocalisation et les prévisions.
-  - `datasource/RemoteWeatherDataSource`, `LocalWeatherDataSource`, `UserPreferencesDataSource` (DataStore).
-  - `local/` Room (`FavoriteCityDao`, `WeatherDao`, `WeatherDatabase`) pour le cache météo/favoris.
-  - `repository/WeatherRepositoryImpl` combine les flux Room + DataStore + réseau et expose `Flow<ApiResult<…>>`.
-  - `model/` contient les data classes API, domaine, mappers et `ApiResult`.
+- **Recherche de villes** : Trouvez n'importe quelle ville dans le monde en temps réel.
+- **Météo détaillée** : Obtenez les conditions actuelles, les températures minimales/maximales et la vitesse du vent.
+- **Gestion des favoris** : Ajoutez vos villes préférées à une liste pour un accès rapide et facile.
+- **Géolocalisation** : Affichez la météo pour votre position actuelle.
+- **Thème dynamique** : L'interface s'adapte automatiquement entre le jour et la nuit, avec des palettes de couleurs et des animations fluides.
+- **Interface moderne** : Entièrement construite avec Jetpack Compose pour une interface utilisateur déclarative et réactive.
 
-### Fonctionnalités principales
+## 🏛️ Architecture
 
-- **Accueil** : barre de recherche (redirige vers l’écran dédié), bouton « Utiliser ma position », carte météo géolocalisée, liste des favoris en `LazyColumn` (clé = `id`, `rememberSaveable` pour la saisie).
-- **Recherche** : requête `https://geocoding-api.open-meteo.com/v1/search?name=…`, affichage des résultats et navigation vers le détail.
-- **Détail** : température actuelle, min/max, vent, condition + icône, bouton ajouter/retirer des favoris.
-- **API météo** : `https://api.open-meteo.com/v1/forecast?...&models=meteofrance_seamless`.
-- **Favoris** : Add/remove synchronisés entre DataStore (accès rapide) et Room (cache complet).
-- **Hors-ligne** : si l’appel réseau échoue → retour `ApiResult.Error` avec données cache + message « mode hors ligne ».
-- **Erreurs** : gestion Timeout/No network/API vide via `ApiResult.Error` + `StateMessageCard`.
-- **Navigation** : `NavHost` Compose (`home`, `search`, `details/{...}`) avec `NavController`.
+Ce projet suit les principes de la **Clean Architecture** et utilise le pattern **MVVM (Model-View-ViewModel)**.
 
-### Stack technique
+- **UI (Compose)** : Affiche les données et envoie les événements utilisateur au ViewModel. Les écrans sont des composables qui réagissent aux changements d'état.
+- **ViewModel** : Contient la logique de l'interface utilisateur, prépare et gère l'état pour l'UI via des `StateFlow`.
+- **Use Cases (Cas d'utilisation)** : Contiennent la logique métier de l'application (par exemple, `GetWeatherForecastUseCase`). Ils sont invoqués par les ViewModels.
+- **Repository** : Centralise la gestion des données et abstrait les sources de données. Le `WeatherRepository` décide s'il faut récupérer les données depuis le réseau ou la base de données locale.
+- **Data Sources** : Gèrent la communication directe avec l'API distante (avec Retrofit) et la base de données locale (avec Room et DataStore).
 
-- Kotlin 2.0.21, Compose Material 3, Navigation Compose
-- ViewModel + `StateFlow` + Coroutines (Dispatchers.IO pour I/O)
-- Retrofit + Kotlinx Serialization + OkHttp Logging
-- Room + KSP, DataStore Preferences
-- Play Services Location, Coil (icônes/images extensibles)
+## 🛠️ Technologies et Bibliothèques
 
-### Lancement
+- **Langage** : [Kotlin](https://kotlinlang.org/)
+- **UI** : [Jetpack Compose](https://developer.android.com/jetpack/compose) - Pour la construction de l'interface utilisateur native.
+- **Architecture** : 
+    - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - Pour gérer l'état de l'UI.
+    - [Coroutines & Flow](https://kotlinlang.org/docs/coroutines-overview.html) - Pour la programmation asynchrone.
+- **Navigation** : [Navigation Compose](https://developer.android.com/jetpack/compose/navigation) - Pour la navigation entre les écrans.
+- **Réseau** : 
+    - [Retrofit](https://square.github.io/retrofit/) - Pour les appels à l'API REST.
+    - [OkHttp](https://square.github.io/okhttp/) - Pour l'inspection du trafic réseau.
+- **Sérialisation JSON** : [Kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) - Pour convertir les objets Kotlin en JSON et vice-versa.
+- **Stockage local** :
+    - [Room](https://developer.android.com/training/data-storage/room) - Pour la gestion de la base de données (villes favorites).
+    - [Jetpack DataStore](https://developer.android.com/topic/libraries/architecture/datastore) - Pour le stockage de préférences simples (IDs des favoris).
+- **Chargement d'images** : [Coil](https://coil-kt.github.io/coil/) - Pour charger et afficher les images des villes.
+- **Géolocalisation** : [Google Play Services Location](https://developer.android.com/training/location) - Pour obtenir la position de l'utilisateur.
 
-```bash
-./gradlew :app:assembleDebug
-```
+## 🚀 Installation
 
-Ou ouvrez le projet dans Android Studio (Giraffe+) et exécutez l’application sur un device réel (permission localisation requise pour le bouton « Utiliser ma position »).
+Pour compiler et exécuter le projet, suivez ces étapes :
 
-### Tests / vérifications recommandées
+1.  **Clonez le dépôt** :
+    ```bash
+    git clone https://github.com/votre-utilisateur/meteo_cahed.git
+    ```
+2.  **Ouvrez dans Android Studio** :
+    - Ouvrez la dernière version d'[Android Studio](https://developer.android.com/studio).
+    - Sélectionnez `File > Open` et naviguez jusqu'au dossier du projet cloné.
 
-- Rechercher plusieurs villes, ajouter/retirer des favoris → vérifier la persistance après redémarrage.
-- Activer le mode avion puis relancer un refresh : l’app doit afficher les données Room + message hors-ligne.
-- Tester la géolocalisation (autorisation accordée/refusée) pour s’assurer que la remontée d’erreurs est correcte.
+3.  **Synchronisez Gradle** :
+    - Laissez Android Studio télécharger et synchroniser les dépendances Gradle.
 
-### Notes
+4.  **Exécutez l'application** :
+    - Sélectionnez un émulateur ou un appareil physique et cliquez sur le bouton `Run`.
 
-- `WeatherSummary` centralise toutes les données météo affichées dans l’UI (température, min/max, vent, icône, statut favori, provenance cache).
-- Les `ViewModel` orchestrent uniquement des intentions utilisateur (refresh, search, toggle favorite). Toute la logique des données reste dans les use cases / repository.
-- Le dossier `res/values` contient les `strings.xml` et `dimens.xml` imposés par le cours (Material3 reste configurable).
-
+**Note** : Ce projet utilise une API météo publique. Si une clé API est nécessaire, vous devrez peut-être en obtenir une et l'ajouter dans les fichiers de configuration appropriés.
